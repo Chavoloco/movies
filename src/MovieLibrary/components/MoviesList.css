@@ -1,14 +1,20 @@
 .movies-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  /* display: flex;
+  flex-direction: row; */
+  /* justify-content: center; */
+  /* align-items: center; */
 
 }
 
 .movies-list > .items {
   width: 20%;
- flex-direction: row;
- 
+ display: grid;
+ grid-template-columns: auto auto auto auto auto;
+}
+
+.movies-list > .sorter {
+  width: 20%;
+  margin: 2%;
 }
 
 .expanded-movie-item {
@@ -25,6 +31,9 @@
 .expanded-movie-item  > .description {
   display: flex;
   flex-direction: column;
+}
+.description span {
+  font-weight: 100;
 }
 
 .movie-list-item {

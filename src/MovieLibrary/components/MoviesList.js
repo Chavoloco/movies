@@ -34,11 +34,11 @@ export default class MoviesList extends PureComponent {
 
     return (
       <div className="movies-list">
-        <div className="items">
-          <div>
+          <div className="sorter">
             <span>Sort by:</span>
             <SortingOptions onChange={this.handleSortingChange}/>
           </div>
+        <div className="items">
           {
             movies.map(movie =>
               <MovieListItem key={movie.id} movie={movie} isSelected={selectedMovie===movie} 

@@ -36,6 +36,9 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
 }
 
 .description{

@@ -11,7 +11,7 @@ const Modal = ({movie:{poster_path, title, original_title, vote_average, vote_co
                 <TMDBImage src={poster_path} className="poster" />
                 <div className="description">
                   <h2>{title}({original_title})</h2>
-                  <div><h4>Rank(votes count)</h4>: <span>{vote_average}({vote_count})</span></div>
+                  <div><h4>Rank(votes count) : <span>{vote_average}({vote_count})</span></h4></div>
                   <span>{overview}</span>
                 </div>
             </div>
