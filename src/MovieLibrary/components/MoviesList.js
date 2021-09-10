@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import TMDBImage from './TMDBImage'
 import './MoviesList.css'
+import Modal  from './Modal/Modal'
 
 export default class MoviesList extends PureComponent {
 
@@ -15,12 +16,19 @@ export default class MoviesList extends PureComponent {
     selectedMovie: null
   }
 
-  handleSelectMovie = item => this.setState({selectedMovie: item})
+  handleSelectMovie = (item) =>{
+    this.setState({selectedMovie: item})
+  }
+
+  closeModal = () =>{
+    this.setState({selectedMovie: null})
+  } 
 
   handleSortingChange = sortingType => console.log(sortingType)
 
+  
   render() {
-
+    
     const {movies} = this.props
     const {selectedMovie} = this.state
 
@@ -33,42 +41,37 @@ export default class MoviesList extends PureComponent {
           </div>
           {
             movies.map(movie =>
-              <MovieListItem key={movie.id} movie={movie} isSelected={selectedMovie===movie} onSelect={this.handleSelectMovie}/>
+              <MovieListItem key={movie.id} movie={movie} isSelected={selectedMovie===movie} 
+              onSelect={this.handleSelectMovie} />
             )
           }
         </div>
-        {
-          selectedMovie && (
-            <ExpandedMovieItem movie={selectedMovie} />
-          )
-        }
+          {
+            selectedMovie && (
+                <Modal movie={selectedMovie} closeModal={this.closeModal}/>
+              )
+          }
       </div>
     )
   }
 }
 
-const ExpandedMovieItem = ({movie: {title, original_title, poster_path, overview, vote_average, vote_count}}) => (
-  <div className="expanded-movie-item">
-    <TMDBImage src={poster_path} className="poster" />
-    <div className="description">
-      <h2>{title}({original_title})</h2>
-      <div><h4>Rank(votes count)</h4>: <span>{vote_average}({vote_count})</span></div>
-      <span>{overview}</span>
-    </div>
-  </div>
-)
 
 class MovieListItem extends Component {
 
+  
   handleClick = () => {
     const {movie, onSelect} = this.props
     onSelect(movie)
   }
 
   render() {
-    const {movie: {title, vote_average}, isSelected} = this.props
+    const {movie: {title, vote_average, poster_path}, isSelected} = this.props
     return (
-      <div className={classNames('movie-list-item', {'selected': isSelected})} onClick={this.handleClick}>{title}({vote_average})</div>
+      <div className={classNames('movie-list-item', {'selected': isSelected})} onClick={this.handleClick}>
+        {title}({vote_average})
+        <TMDBImage src={poster_path} className="poster" />
+      </div>
     )
   }
 }
@@ -91,11 +94,10 @@ class SortingOptions extends Component {
     return (
       <select value={this.state.value} onChange={this.handleChange}>
         <option value=""></option>
-        <option value="name_asc">A -> Z</option>
-        <option value="name_desc">Z -> A</option>
+        <option value="name_asc">A - Z</option>
+        <option value="name_desc">Z - A</option>
         <option value="rating">Rating</option>
       </select>
     )
   }
 }
-

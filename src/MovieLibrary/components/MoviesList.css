@@ -1,18 +1,22 @@
 .movies-list {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
+
 }
 
 .movies-list > .items {
   width: 20%;
+ flex-direction: row;
+ 
 }
 
 .expanded-movie-item {
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: row;
 }
+
 
 .expanded-movie-item h4 {
   display: inline;
@@ -25,8 +29,23 @@
 
 .movie-list-item {
   cursor: pointer;
+  background-color: #256;
+  width: 330px;
+  height: 430px;
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 20px;
+  text-align: center;
+  transition: all 0.25s;
+}
+
+.movie-list-item:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
 }
 
 .movie-list-item.selected {
   text-decoration: underline;
 }
+
