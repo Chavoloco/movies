@@ -13,7 +13,8 @@ export default class MoviesList extends PureComponent {
   }
 
   state = {
-    selectedMovie: null
+    selectedMovie: null,
+    movies: this.props.movies
   }
 
   handleSelectMovie = (item) =>{
@@ -24,12 +25,54 @@ export default class MoviesList extends PureComponent {
     this.setState({selectedMovie: null})
   } 
 
-  handleSortingChange = sortingType => console.log(sortingType)
+  handleSortingChange = (sortingType) =>{
+
+    let sortedList = [...this.props.movies]
+
+    if (sortingType === "") {
+      this.setState({movies: sortedList})
+      console.log(sortingType);
+      return
+    }
+    this.sort(sortingType, sortedList)
+    this.setState({movies : sortedList})
+  }
+
+  sort = (sortingType, sortedList) =>{
+
+    switch (sortingType) {
+  
+      case "name_asc":
+        sortedList.sort((a, b) =>(a.title > b.title ? 1 : a.title < b.title ? -1 : 0))
+        this.setState({ movies : sortedList })
+        console.log(sortingType);
+        break
+        
+        
+      case "name_desc":
+        sortedList.sort((a, b) => (a.title > b.title ? -1 : a.title < b.title ? 1 : 0))
+        this.setState({movies:sortedList})
+        console.log(sortingType);
+        break
+        
+      case "rating":
+        sortedList.sort((a, b) => (a.vote_average > b.vote_average ? -1 : a.vote_average < b.vote_average ? 1 : 0))
+        this.setState({movies:sortedList})
+        console.log(sortingType);
+        break
+        
+      
+      default:
+        break
+        
+    
+  }
+  }
 
   
   render() {
     
-    const {movies} = this.props
+    // const {movies} = this.props
     const {selectedMovie} = this.state
 
     return (
@@ -40,7 +83,7 @@ export default class MoviesList extends PureComponent {
           </div>
         <div className="items">
           {
-            movies.map(movie =>
+            this.state.movies.map(movie =>
               <MovieListItem key={movie.id} movie={movie} isSelected={selectedMovie===movie} 
               onSelect={this.handleSelectMovie} />
             )
