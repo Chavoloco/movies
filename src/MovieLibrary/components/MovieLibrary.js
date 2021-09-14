@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {fetchTopRatedMovies} from '../store/actions'
+import {fetchNowPlayingMovies} from '../store/actions'
 
 
 import logo from './logo.svg'
 import './MovieLibrary.css'
-import {getMovies} from '../store/selectors'
+import {getMovies, getMoviesIsLoading} from '../store/selectors'
 import MoviesList from './MoviesList'
 
 class MovieLibrary extends Component {
@@ -16,12 +16,13 @@ class MovieLibrary extends Component {
   }
 
   componentDidMount() {
-    const {fetchTopRatedMovies} = this.props
-    fetchTopRatedMovies()
+    const {fetchNowPlayingMovies} = this.props
+    fetchNowPlayingMovies()
   }
 
+
   render() {
-    const {movies} = this.props
+    const {movies, isloading} = this.props
     return (
       <div className="MovieLibrary">
         <header className="ML-header">
@@ -29,13 +30,16 @@ class MovieLibrary extends Component {
           <h1 className="ML-title">Movies</h1>
         </header>
         <div className="ML-intro">
-          { movies.length && <MoviesList movies={movies}/> }
+          { movies.length && <MoviesList movies={movies} /> 
+          }
         </div>
+          {isloading && "Loading.."}
       </div>
     );
   }
 }
 
 export default connect(state => ({
-  movies: getMovies(state)
-}), {fetchTopRatedMovies})(MovieLibrary)
+  movies: getMovies(state),
+  isloading: getMoviesIsLoading(state)
+}), {fetchNowPlayingMovies})(MovieLibrary)

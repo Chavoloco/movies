@@ -14,7 +14,8 @@ export default class MoviesList extends PureComponent {
 
   state = {
     selectedMovie: null,
-    movies: this.props.movies
+    movies: this.props.movies,
+    page: this.props.page
   }
 
   handleSelectMovie = (item) =>{
@@ -48,7 +49,6 @@ export default class MoviesList extends PureComponent {
         console.log(sortingType);
         break
         
-        
       case "name_desc":
         sortedList.sort((a, b) => (a.title > b.title ? -1 : a.title < b.title ? 1 : 0))
         this.setState({movies:sortedList})
@@ -61,14 +61,10 @@ export default class MoviesList extends PureComponent {
         console.log(sortingType);
         break
         
-      
       default:
         break
-        
-    
   }
   }
-
   
   render() {
     
@@ -98,7 +94,6 @@ export default class MoviesList extends PureComponent {
     )
   }
 }
-
 
 class MovieListItem extends Component {
 
