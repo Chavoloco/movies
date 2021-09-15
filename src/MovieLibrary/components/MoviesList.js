@@ -15,7 +15,6 @@ export default class MoviesList extends PureComponent {
   state = {
     selectedMovie: null,
     movies: this.props.movies,
-    page: this.props.page
   }
 
   handleSelectMovie = (item) =>{

@@ -12,7 +12,7 @@ const createMovieDbUrl = (relativeUrl, queryParams) => {
   return baseUrl;
 }
 
-export const  getNowPlayingMovies = async (page = 1) => {
+export const  getNowPlayingMovies = async (page) => {
   const fullUrl = createMovieDbUrl('/movie/now_playing', {page});
   return fetch(fullUrl, {
       method: 'GET'

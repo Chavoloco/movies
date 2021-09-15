@@ -28,10 +28,10 @@
   display: inline;
 }
 
-.expanded-movie-item  > .description {
-  /* display: flex;
-  flex-direction: column; */
-}
+/* .expanded-movie-item  > .description {
+  display: flex;
+  flex-direction: column;
+} */
 .description span {
   font-weight: 100;
 }
