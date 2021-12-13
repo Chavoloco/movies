@@ -1,22 +1,23 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import {fetchNowPlayingMovies, fetchMoreMovies} from '../store/actions'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { fetchNowPlayingMovies, fetchMoreMovies } from "../store/actions";
 
-
-import logo from './logo.svg'
-import './MovieLibrary.css'
-import {getMovies, getMoviesIsLoading, getAllMoviesIsLoaded} from '../store/selectors'
-import MoviesList from './MoviesList'
+import logo from "./logo.svg";
+import "./MovieLibrary.css";
+import {
+  getMovies,
+  getMoviesIsLoading,
+  getAllMoviesIsLoaded,
+} from "../store/selectors";
+import MoviesList from "./MoviesList";
 
 class MovieLibrary extends Component {
-
-  static propTypes = {
-  }
+  static propTypes = {};
 
   constructor(props) {
-    super(props)
-    this.handleScroll = this.handleScroll.bind(this)
+    super(props);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   getScrollDownPercentage = (window) => {
@@ -26,23 +27,24 @@ class MovieLibrary extends Component {
     const currentPosition = scrollPos + clientHeight;
     const percentageScrolled = currentPosition / pageHeight;
     return percentageScrolled;
-  }
+  };
 
   componentDidMount() {
-    const {fetchNowPlayingMovies} = this.props
-    fetchNowPlayingMovies()
-    window.addEventListener('scroll', this.handleScroll)
+    const { fetchNowPlayingMovies } = this.props;
+    fetchNowPlayingMovies();
+    window.addEventListener("scroll", this.handleScroll);
   }
 
-  // componentWillUnmount(){
-  //   window.removeEventListener('scroll', this.handleScroll)
-  // }
+  componentWillMount() {
+    // window.removeEventListener("scroll", this.handleScroll);
+    this.handleScroll();
+  }
 
-  handleScroll(){
-    const {fetchMoreMovies, isLoading, allMoviesIsLoaded} = this.props
+  handleScroll() {
+    const { fetchMoreMovies, isLoading, allMoviesIsLoaded } = this.props;
     if (allMoviesIsLoaded) {
-      window.removeEventListener('scroll', this.handleScroll)
-      return
+      window.removeEventListener("scroll", this.handleScroll);
+      return;
     }
     if (
       window.innerHeight + document.documentElement.scrollTop !==
@@ -50,12 +52,11 @@ class MovieLibrary extends Component {
       isLoading
     )
       return;
-      fetchMoreMovies();
+    fetchMoreMovies();
   }
 
-
   render() {
-    const {movies, isLoading} = this.props
+    const { movies, isLoading } = this.props;
     return (
       <div className="MovieLibrary">
         <header className="ML-header">
@@ -63,19 +64,19 @@ class MovieLibrary extends Component {
           <h1 className="ML-title">Movies</h1>
         </header>
         <div className="ML-intro">
-          { movies.length && <MoviesList movies={movies} /> }
-          
+          {movies.length && <MoviesList movies={movies} />}
         </div>
-          <div className="ML-loader">
-            {isLoading && "Loading.."}
-          </div>
+        <div className="ML-loader">{isLoading && "Loading.."}</div>
       </div>
     );
   }
 }
 
-export default connect(state => ({
-  movies: getMovies(state),
-  isloading: getMoviesIsLoading(state),
-  allMoviesIsLoaded: getAllMoviesIsLoaded(state)
-}), { fetchNowPlayingMovies, fetchMoreMovies })(MovieLibrary)
+export default connect(
+  (state) => ({
+    movies: getMovies(state),
+    isloading: getMoviesIsLoading(state),
+    allMoviesIsLoaded: getAllMoviesIsLoaded(state),
+  }),
+  { fetchNowPlayingMovies, fetchMoreMovies }
+)(MovieLibrary);

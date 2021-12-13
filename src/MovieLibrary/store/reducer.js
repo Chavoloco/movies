@@ -1,23 +1,24 @@
-import {FETCH_MOVIES, 
-        FETCH_MOVIES_LOADING, 
-        FETCH_MORE_MOVIES} from '../../actionTypes'
+import {
+  FETCH_MOVIES,
+  FETCH_MOVIES_LOADING,
+  FETCH_MORE_MOVIES,
+} from "../../actionTypes";
 
 const initialState = {
   movies: [],
   lastPageLoaded: 1,
   totalPages: null,
   isLoading: false,
-}
+};
 
 export default function movies(state = initialState, action) {
-  const {type, payload} = action
+  const { type, payload } = action;
   switch (type) {
-    
     case FETCH_MOVIES_LOADING:
-      return{
+      return {
         ...state,
-        isLoading : true
-      }
+        isLoading: true,
+      };
 
     case FETCH_MOVIES:
       return {
@@ -25,17 +26,17 @@ export default function movies(state = initialState, action) {
         lastPageLoaded: 3,
         ...payload,
         isLoading: false,
-      }
+      };
 
     case FETCH_MORE_MOVIES:
-      return{
+      return {
         ...state,
-        movies: [...state.movies, payload],
-        lastPageLoaded: state.lastPageLoaded ++,
+        movies: [...state.movies, ...payload],
+        lastPageLoaded: state.lastPageLoaded + 1,
         isLoading: false,
-      }
+      };
 
     default:
-      return state
+      return state;
   }
 }
