@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { fetchNowPlayingMovies, fetchMoreMovies } from "../store/actions";
 
 import logo from "./logo.svg";
@@ -13,7 +13,7 @@ import {
 import MoviesList from "./MoviesList";
 
 class MovieLibrary extends Component {
-  static propTypes = {};
+  // static propTypes = {};
 
   constructor(props) {
     super(props);
