@@ -13,12 +13,8 @@ export default class MoviesList extends PureComponent {
 
   state = {
     selectedMovie: null,
-    movies: this.props.movies,
+    sortingType: null,
   };
-
-  // componentDidUpdate() {
-  //   this.setState({ movies: this.props.movies });
-  // }
 
   handleSelectMovie = (item) => {
     this.setState({ selectedMovie: item });
@@ -29,33 +25,31 @@ export default class MoviesList extends PureComponent {
   };
 
   handleSortingChange = (sortingType) => {
-    let sortedList = [...this.props.movies];
-
-    if (sortingType === "") {
-      this.setState({ movies: sortedList });
-      console.log(sortingType);
-      return;
-    }
-    this.sort(sortingType, sortedList);
-    this.setState({ movies: sortedList });
+    this.setState({ sortingType: sortingType });
   };
 
   sort = (sortingType, sortedList) => {
     switch (sortingType) {
       case "name_asc":
         sortedList.sort((a, b) =>
-          a.title > b.title ? 1 : a.title < b.title ? -1 : 0
+          a.original_title.toLowerCase() > b.original_title.toLowerCase()
+            ? 1
+            : a.original_title.toLowerCase() < b.original_title.toLowerCase()
+            ? -1
+            : 0
         );
-        this.setState({ movies: sortedList });
-        console.log(sortingType);
+        this.setState({ sortedList: sortedList });
         break;
 
       case "name_desc":
         sortedList.sort((a, b) =>
-          a.title > b.title ? -1 : a.title < b.title ? 1 : 0
+          a.original_title.toLowerCase() > b.original_title.toLowerCase()
+            ? -1
+            : a.original_title.toLowerCase() < b.original_title.toLowerCase()
+            ? 1
+            : 0
         );
-        this.setState({ movies: sortedList });
-        console.log(sortingType);
+        this.setState({ sortedList: sortedList });
         break;
 
       case "rating":
@@ -66,8 +60,7 @@ export default class MoviesList extends PureComponent {
             ? 1
             : 0
         );
-        this.setState({ movies: sortedList });
-        console.log(sortingType);
+        this.setState({ sortedList: sortedList });
         break;
 
       default:
@@ -77,7 +70,8 @@ export default class MoviesList extends PureComponent {
 
   render() {
     const { movies } = this.props;
-    const { selectedMovie } = this.state;
+    const { selectedMovie, sortingType } = this.state;
+    this.sort(sortingType, movies);
     return (
       <div className="movies-list">
         <div className="sorter">
@@ -87,7 +81,7 @@ export default class MoviesList extends PureComponent {
         <div className="items">
           {movies.map((movie) => (
             <MovieListItem
-              //key={movie.id}
+              // key={movie.id}
               movie={movie}
               isSelected={selectedMovie === movie}
               onSelect={this.handleSelectMovie}
